@@ -2596,7 +2596,7 @@ body {
         grid-template-columns: 1fr;
         gap: 18px;
         min-height: 0;
-        padding: 28px;
+        padding: 24px;
     }
 
     .market-hero h1 {
@@ -2727,13 +2727,13 @@ body {
 
     .market-hero {
         border-radius: 12px;
-        gap: 16px;
-        padding: 20px 16px;
+        gap: 12px;
+        padding: 18px 16px;
     }
 
     .market-hero h1 {
         margin: 6px 0 10px;
-        font-size: 30px;
+        font-size: 28px;
         line-height: 1.08;
     }
 
@@ -2756,36 +2756,12 @@ body {
         font-size: 15px;
     }
 
-    .hero-appliance-grid,
     .promo-row {
         grid-template-columns: 1fr;
     }
 
     .hero-appliance-grid {
-        gap: 8px;
-    }
-
-    .hero-appliance-grid a {
-        grid-template-columns: 92px 1fr;
-        align-items: center;
-        min-height: 94px;
-        padding: 8px;
-    }
-
-    .hero-appliance-grid img {
-        grid-row: span 2;
-        height: 78px;
-    }
-
-    .hero-appliance-grid b {
-        align-self: end;
-        font-size: 13px;
-        line-height: 1.2;
-    }
-
-    .hero-appliance-grid span {
-        align-self: start;
-        font-size: 14px;
+        display: none;
     }
 
     .catalog-content {
