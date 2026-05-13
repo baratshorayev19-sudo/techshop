@@ -2537,6 +2537,10 @@ body {
 }
 
 @media (max-width: 900px) {
+    .market-header {
+        position: static;
+    }
+
     .top-inner {
         gap: 12px;
         overflow-x: auto;
@@ -2544,11 +2548,13 @@ body {
 
     .market-nav {
         grid-template-columns: 1fr;
-        padding: 12px 0;
+        gap: 8px;
+        padding: 10px 0;
     }
 
     .market-brand {
         margin-right: 0;
+        font-size: 26px;
     }
 
     .catalog-wrap {
@@ -2641,6 +2647,24 @@ body {
     .pay-icons {
         grid-column: 2;
         justify-content: flex-start;
+    }
+
+    .market-actions {
+        justify-content: space-between;
+        gap: 6px;
+        padding-top: 2px;
+    }
+
+    .market-actions .market-action {
+        min-width: 62px;
+        min-height: 52px;
+        padding: 5px 4px;
+        font-size: 13px;
+    }
+
+    .market-actions .market-action svg {
+        width: 26px;
+        height: 26px;
     }
 }
 
@@ -2744,18 +2768,6 @@ body {
 
     .login-label {
         font-size: 18px;
-    }
-
-    .market-actions .market-action {
-        min-width: 68px;
-        min-height: 58px;
-        padding: 6px;
-        font-size: 14px;
-    }
-
-    .market-actions .market-action svg {
-        width: 28px;
-        height: 28px;
     }
 
     .auth-form input {
