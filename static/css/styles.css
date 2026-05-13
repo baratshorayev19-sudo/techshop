@@ -2594,7 +2594,34 @@ body {
 
     .market-hero {
         grid-template-columns: 1fr;
+        gap: 18px;
+        min-height: 0;
         padding: 28px;
+    }
+
+    .market-hero h1 {
+        max-width: 520px;
+        font-size: 42px;
+    }
+
+    .market-hero p {
+        max-width: 560px;
+        font-size: 17px;
+        line-height: 1.45;
+    }
+
+    .hero-appliance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .hero-appliance-grid a {
+        min-height: 120px;
+        padding: 10px;
+    }
+
+    .hero-appliance-grid img {
+        height: 76px;
     }
 
     .promo-row {
@@ -2700,16 +2727,65 @@ body {
 
     .market-hero {
         border-radius: 12px;
-        padding: 22px;
+        gap: 16px;
+        padding: 20px 16px;
     }
 
     .market-hero h1 {
-        font-size: 34px;
+        margin: 6px 0 10px;
+        font-size: 30px;
+        line-height: 1.08;
+    }
+
+    .market-hero p {
+        margin: 0 0 14px;
+        font-size: 16px;
+        line-height: 1.42;
+    }
+
+    .market-hero .eyebrow {
+        margin: 0;
+        font-size: 12px;
+        line-height: 1.35;
+    }
+
+    .market-hero .btn {
+        min-height: 44px;
+        padding: 0 16px;
+        border-radius: 10px;
+        font-size: 15px;
     }
 
     .hero-appliance-grid,
     .promo-row {
         grid-template-columns: 1fr;
+    }
+
+    .hero-appliance-grid {
+        gap: 8px;
+    }
+
+    .hero-appliance-grid a {
+        grid-template-columns: 92px 1fr;
+        align-items: center;
+        min-height: 94px;
+        padding: 8px;
+    }
+
+    .hero-appliance-grid img {
+        grid-row: span 2;
+        height: 78px;
+    }
+
+    .hero-appliance-grid b {
+        align-self: end;
+        font-size: 13px;
+        line-height: 1.2;
+    }
+
+    .hero-appliance-grid span {
+        align-self: start;
+        font-size: 14px;
     }
 
     .catalog-content {
