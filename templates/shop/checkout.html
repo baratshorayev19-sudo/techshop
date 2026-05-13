@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.checkout }} | TechShop{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+    <span class="eyebrow">{{ ui.secure_checkout }}</span>
+    <h1>{{ ui.checkout_title }}</h1>
+</section>
+
+<section class="checkout-layout checkout-modern">
+    <form id="checkout-form-external" class="checkout-flow" method="post" novalidate>
+        {% csrf_token %}
+        <section class="checkout-card">
+            <h2>{{ ui.customer_info }}</h2>
+            <div class="checkout-fields two customer-fields">
+                <div class="field">
+                    <label for="{{ form.full_name.id_for_label }}">{{ form.full_name.label }}</label>
+                    {{ form.full_name }}
+                    <small>{{ ui.full_name_hint }}</small>
+                    {% for error in form.full_name.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="field">
+                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                    {{ form.email }}
+                    {% for error in form.email.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="field">
+                    <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>
+                    {{ form.phone }}
+                    {% for error in form.phone.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="checkout-card">
+            <h2>{{ ui.delivery_method }}</h2>
+            <div class="delivery-options">
+                <label class="choice-card active">
+                    <input type="radio" name="delivery_method" value="delivery" checked>
+                    <span class="choice-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v10H3z"></path><path d="M14 10h4l3 3v4h-7z"></path><circle cx="7" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg>
+                    </span>
+                    <strong>{{ ui.delivery_to_door }}</strong>
+                    <small>{{ ui.delivery_to_door_hint }}</small>
+                </label>
+                <label class="choice-card">
+                    <input type="radio" name="delivery_method" value="pickup">
+                    <span class="choice-icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h16l-1 11H5z"></path><path d="M7 9V6a5 5 0 0 1 10 0v3"></path></svg>
+                    </span>
+                    <strong>{{ ui.pickup_point }}</strong>
+                    <small>{{ ui.pickup_point_hint }}</small>
+                </label>
+            </div>
+
+            <div class="address-note">
+                <span class="choice-icon compact">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.3 7-12a7 7 0 0 0-14 0c0 6.7 7 12 7 12Z"></path><circle cx="12" cy="9" r="2"></circle></svg>
+                </span>
+                <div>
+                    <strong>{{ ui.address_not_selected }}</strong>
+                    <p>{{ ui.address_hint }}</p>
+                </div>
+            </div>
+
+            <div class="checkout-fields two address-fields">
+                <div class="field">
+                    <label for="{{ form.city.id_for_label }}">{{ form.city.label }}</label>
+                    {{ form.city }}
+                    {% for error in form.city.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+                <div class="field">
+                    <label for="{{ form.address.id_for_label }}">{{ form.address.label }}</label>
+                    {{ form.address }}
+                    {% for error in form.address.errors %}<small class="field-error">{{ error }}</small>{% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section class="checkout-card">
+            <h2>{{ ui.payment_method_title }}</h2>
+            <div class="payment-stack">
+                <label class="payment-option active">
+                    <input type="radio" name="payment_method" value="card" checked>
+                    <span class="radio-dot"></span>
+                    <span>
+                        <strong>{{ ui.payment_card }}</strong>
+                        <small>{{ ui.payment_card_hint }}</small>
+                    </span>
+                    <span class="payment-logos">
+                        <b>click</b><b>payme</b><b>octo</b>
+                    </span>
+                </label>
+                <label class="payment-option">
+                    <input type="radio" name="payment_method" value="transfer">
+                    <span class="radio-dot"></span>
+                    <span>
+                        <strong>{{ ui.payment_installment }}</strong>
+                        <small>{{ ui.payment_installment_hint }}</small>
+                    </span>
+                    <span class="payment-logos muted-logo">
+                        <b>IMAN</b><b>alif</b><b>uzum</b>
+                    </span>
+                </label>
+                <label class="payment-option">
+                    <input type="radio" name="payment_method" value="cash">
+                    <span class="radio-dot"></span>
+                    <span>
+                        <strong>{{ ui.payment_cash }}</strong>
+                        <small>{{ ui.payment_cash_hint }}</small>
+                    </span>
+                    <span class="pay-icons">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v10H3z"></path><path d="M7 11h.01M17 13h.01"></path></svg>
+                    </span>
+                </label>
+            </div>
+        </section>
+    </form>
+
+    <aside class="summary checkout-summary">
+        <h2>{{ ui.your_items }}</h2>
+        <span class="summary-muted">{{ items|length }} {{ ui.products_count }}</span>
+        <div class="summary-items">
+            {% for item in items %}
+                <div class="summary-product">
+                    <img src="{{ item.product.image }}?v=20260512-9" alt="{{ item.product.name }}">
+                    <span>{{ item.product.name }} <small>x {{ item.quantity }}</small></span>
+                    <strong>{{ item.subtotal_display }}</strong>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="promo-box">
+            <input type="text" placeholder="{{ ui.promo_placeholder }}">
+            <button type="button">{{ ui.apply }}</button>
+        </div>
+        <div class="summary-line"><span>{{ ui.products_price }}</span><strong>{{ old_total_display }}</strong></div>
+        {% if discount_total %}
+            <div class="summary-line discount-line"><span>{{ ui.total_discount }}</span><strong>-{{ discount_total_display }}</strong></div>
+        {% endif %}
+        <div class="summary-line"><span>{{ ui.subtotal }}</span><strong>{{ total_display }}</strong></div>
+        <div class="summary-line"><span>{{ ui.delivery }}</span><strong>{{ ui.free }}</strong></div>
+        <div class="summary-total"><span>{{ ui.total }}</span><strong>{{ total_display }}</strong></div>
+        <button class="btn primary full checkout-submit" type="submit" form="checkout-form-external">{{ ui.place_order }}</button>
+        <p class="terms-note">{{ ui.terms_note }}</p>
+    </aside>
+</section>
+{% endblock %}

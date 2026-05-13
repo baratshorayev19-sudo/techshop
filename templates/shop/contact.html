@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.contact }} | TechShop{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+    <span class="eyebrow">{{ ui.support }}</span>
+    <h1>{{ ui.contact_title }}</h1>
+</section>
+<section class="contact-grid">
+    <div class="contact-card">
+        <h2>{{ ui.customer_service }}</h2>
+        <p>{{ ui.phone }}: +998 90 123 45 67</p>
+        <p>{{ ui.email }}: support@TechShop.uz</p>
+        <p>{{ ui.address }}: Tashkent, Uzbekistan</p>
+    </div>
+    <form class="checkout-form">
+        <div class="field"><label>{{ ui.name }}</label><input placeholder="{{ ui.your_name }}"></div>
+        <div class="field"><label>{{ ui.email }}</label><input type="email" placeholder="you@example.com"></div>
+        <div class="field"><label>{{ ui.message }}</label><textarea rows="4" placeholder="{{ ui.help_placeholder }}"></textarea></div>
+        <button class="btn primary full" type="button">{{ ui.send_message }}</button>
+    </form>
+</section>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.products }} | TechShop{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+    <span class="eyebrow">{{ ui.catalog }}</span>
+    <h1>{{ ui.catalog_title }}</h1>
+</section>
+
+<section class="catalog-layout">
+    <aside class="filters">
+        <form method="get">
+            <label>{{ ui.search }}</label>
+            <input name="q" value="{{ query }}" placeholder="LG, Bosch, konditsioner...">
+
+            <label>{{ ui.category }}</label>
+            <select name="category">
+                {% for key, label in categories.items %}
+                    <option value="{{ key }}" {% if active_category == key %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+
+            <label>{{ ui.maximum_price }}</label>
+            <input type="number" name="max_price" value="{{ max_price }}" min="0" step="1" placeholder="{% if current_language == 'uz' %}15000000{% else %}1500{% endif %}">
+
+            <label>{{ ui.sort_by }}</label>
+            <select name="sort">
+                <option value="featured" {% if sort == "featured" %}selected{% endif %}>{{ ui.featured }}</option>
+                <option value="price_asc" {% if sort == "price_asc" %}selected{% endif %}>{{ ui.price_low_high }}</option>
+                <option value="price_desc" {% if sort == "price_desc" %}selected{% endif %}>{{ ui.price_high_low }}</option>
+                <option value="rating" {% if sort == "rating" %}selected{% endif %}>{{ ui.top_rated }}</option>
+            </select>
+            <button class="btn primary full" type="submit">{{ ui.apply_filters }}</button>
+            <a class="btn subtle full" href="{% url 'shop:products' %}">{{ ui.reset }}</a>
+        </form>
+    </aside>
+
+    <div>
+        <div class="catalog-top">
+            <strong>{{ products|length }} {{ ui.products_found }}</strong>
+            <span>{{ ui.ready_to_order }}</span>
+        </div>
+        <div class="product-grid">
+            {% for product in products %}
+                {% include "shop/_product_card.html" %}
+            {% empty %}
+                <div class="empty-state">{{ ui.no_products }}</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

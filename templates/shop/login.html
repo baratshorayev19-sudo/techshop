@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ ui.login }} | TechShop{% endblock %}
+
+{% block content %}
+<section class="login-page">
+    {% if auth_display %}
+        <div class="profile-panel">
+            <div class="profile-head">
+                <span class="profile-avatar">{{ auth_display|first|upper }}</span>
+                <div>
+                    <span class="eyebrow">{{ ui.signed_in_as }}</span>
+                    <h1>{{ ui.profile_title }}</h1>
+                    <p>{{ auth_display }}</p>
+                </div>
+            </div>
+            <div class="profile-fields">
+                <div>
+                    <span>{{ ui.full_name }}</span>
+                    <strong>{{ auth_display }}</strong>
+                </div>
+                <div>
+                    <span>{{ ui.email }}</span>
+                    <strong>{% if auth_email %}{{ auth_email }}{% else %}-{% endif %}</strong>
+                </div>
+                <div>
+                    <span>{{ ui.phone }}</span>
+                    <strong>{% if auth_phone %}{{ auth_phone }}{% else %}-{% endif %}</strong>
+                </div>
+                <div>
+                    <span>{{ ui.profile_type }}</span>
+                    <strong>{% if auth_email %}{{ ui.google_account }}{% else %}{{ ui.phone_account }}{% endif %}</strong>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <a class="btn ghost" href="{% url 'shop:products' %}">{{ ui.back_to_catalog }}</a>
+                <a class="btn danger" href="{% url 'shop:logout' %}?next={{ next_url|urlencode }}">{{ ui.logout }}</a>
+            </div>
+        </div>
+    {% else %}
+    <div class="login-panel">
+        {% if request.GET.login == "code" and auth_pending_phone %}
+            <h1 class="login-title">{{ ui.code_title }}</h1>
+            <form class="auth-form" action="{% url 'shop:verify_login_code' %}" method="post">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ next_url }}">
+                <label class="login-label" for="login-phone-readonly">{{ ui.phone }}</label>
+                <input id="login-phone-readonly" type="text" value="{{ auth_pending_phone }}" readonly>
+                <label class="login-label" for="login-code">SMS kod</label>
+                <input name="code" inputmode="numeric" maxlength="4" placeholder="{{ ui.code_placeholder }}" autofocus>
+                <button type="submit">{{ ui.sign_in }}</button>
+            </form>
+            <div class="demo-code">{{ ui.demo_code }}: <strong>{{ auth_demo_code }}</strong></div>
+            <a class="link-button resend-link" href="{% url 'shop:login' %}?next={{ next_url|urlencode }}">{{ ui.change_phone }}</a>
+            <div class="auth-divider"><span>{{ ui.login_or|title }}</span></div>
+            <div class="social-login-row">
+                <a class="social-login-button google" href="{% url 'shop:google_login' %}?next={{ next_url|urlencode }}" aria-label="{{ ui.login_with_google }}">
+                    <img src="{% static 'img/google-g.svg' %}" alt="">
+                    <span>Google</span>
+                </a>
+            </div>
+        {% else %}
+            <h1 class="login-title">{{ ui.sign_in_or_create }}</h1>
+            <form class="auth-form" action="{% url 'shop:request_login_code' %}" method="post">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ next_url }}">
+                <label class="login-label" for="login-phone">{{ ui.phone }}</label>
+                <input id="login-phone" name="phone" inputmode="tel" placeholder="+998(__) ___-__-__" value="+998" autofocus>
+                <button type="submit">{{ ui.get_code }}</button>
+            </form>
+            <div class="auth-divider"><span>{{ ui.login_or|title }}</span></div>
+            <div class="social-login-row">
+                <a class="social-login-button google" href="{% url 'shop:google_login' %}?next={{ next_url|urlencode }}" aria-label="{{ ui.login_with_google }}">
+                    <img src="{% static 'img/google-g.svg' %}" alt="">
+                    <span>Google</span>
+                </a>
+            </div>
+        {% endif %}
+
+        <p class="auth-agreement">{{ ui.agreement }}</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

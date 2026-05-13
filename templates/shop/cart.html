@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.cart }} | TechShop{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+    <span class="eyebrow">{{ ui.shopping_cart }}</span>
+    <h1>{{ ui.review_order }}</h1>
+</section>
+
+<section class="cart-layout">
+    <div class="cart-items">
+        {% for item in items %}
+            <article class="cart-row">
+                <img src="{{ item.product.image }}?v=20260512-9" alt="{{ item.product.name }}">
+                <div>
+                    <h3>{{ item.product.name }}</h3>
+                    <p>{{ item.product.price_display }} {{ ui.each }}</p>
+                    {% if item.discount %}
+                        <span class="cart-discount">{{ ui.discount }} -{{ item.discount_display }}</span>
+                    {% endif %}
+                </div>
+                <form method="post" action="{% url 'shop:update_cart' item.product.slug %}" class="qty-form" data-auto-update-cart>
+                    {% csrf_token %}
+                    <div class="quantity-stepper small" data-quantity-stepper>
+                        <button type="button" data-step="-1" aria-label="Decrease quantity">-</button>
+                        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="10" readonly>
+                        <button type="button" data-step="1" aria-label="Increase quantity">+</button>
+                    </div>
+                    <button class="btn subtle cart-update-btn" type="submit">{{ ui.update }}</button>
+                </form>
+                <div class="cart-line-price">
+                    {% if item.discount %}<del>{{ item.old_subtotal_display }}</del>{% endif %}
+                    <strong>{{ item.subtotal_display }}</strong>
+                </div>
+                <form method="post" action="{% url 'shop:remove_from_cart' item.product.slug %}">
+                    {% csrf_token %}
+                    <button class="remove-btn" type="submit">{{ ui.remove }}</button>
+                </form>
+            </article>
+        {% empty %}
+            <div class="empty-state">{{ ui.empty_cart }}</div>
+        {% endfor %}
+    </div>
+    <aside class="summary">
+        <h2>{{ ui.order_summary }}</h2>
+        <div><span>{{ ui.products_price }}</span><strong>{{ old_total_display }}</strong></div>
+        {% if discount_total %}
+            <div class="discount-line"><span>{{ ui.total_discount }}</span><strong>-{{ discount_total_display }}</strong></div>
+        {% endif %}
+        <div><span>{{ ui.subtotal }}</span><strong>{{ total_display }}</strong></div>
+        <div><span>{{ ui.delivery }}</span><strong>{{ ui.free }}</strong></div>
+        <div class="summary-total"><span>{{ ui.total }}</span><strong>{{ total_display }}</strong></div>
+        <a class="btn primary full {% if not items %}disabled{% endif %}" href="{% url 'shop:checkout' %}">{{ ui.checkout }}</a>
+        <a class="btn subtle full" href="{% url 'shop:products' %}">{{ ui.continue_shopping }}</a>
+    </aside>
+</section>
+{% endblock %}

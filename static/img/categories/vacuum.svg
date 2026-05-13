@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" role="img" aria-label="Vacuum cleaner">
+  <rect width="260" height="180" rx="24" fill="#f8fafc"/>
+  <circle cx="160" cy="105" r="43" fill="#0ea5e9"/>
+  <circle cx="160" cy="105" r="25" fill="#0f172a"/>
+  <circle cx="160" cy="105" r="11" fill="#e0f2fe"/>
+  <path d="M55 139h73" stroke="#111827" stroke-width="11" stroke-linecap="round"/>
+  <path d="M71 138 126 75c13-15 29-25 51-25h28" fill="none" stroke="#111827" stroke-width="10" stroke-linecap="round"/>
+  <path d="M204 50h18" stroke="#64748b" stroke-width="8" stroke-linecap="round"/>
+  <path d="M53 126h33l-9 25H42l11-25Z" fill="#475569"/>
+</svg>

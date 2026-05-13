@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.about }} | TechShop{% endblock %}
+{% block content %}
+<section class="page-hero">
+    <span class="eyebrow">{{ ui.about_project }}</span>
+    <h1>{{ ui.about_title }}</h1>
+    <p>{{ ui.about_text }}</p>
+</section>
+<section class="split-band">
+    <div>
+        <h2>{{ ui.project_goals }}</h2>
+        <p>{{ ui.project_goals_text }}</p>
+    </div>
+    <div class="feature-list">
+        <div><b>{{ ui.architecture }}</b><span>{{ ui.architecture_text }}</span></div>
+        <div><b>{{ ui.ux }}</b><span>{{ ui.ux_text }}</span></div>
+        <div><b>{{ ui.scalability }}</b><span>{{ ui.scalability_text }}</span></div>
+    </div>
+</section>
+{% endblock %}

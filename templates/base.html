@@ -1,0 +1,250 @@
+{% load static %}
+<!doctype html>
+<html lang="{{ current_language }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="TechShop home appliances online store.">
+    <title>{% block title %}TechShop{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=20260513-2">
+</head>
+<body>
+    <header class="market-header">
+        <div class="market-nav">
+            <a class="brand market-brand" href="{% url 'shop:home' %}" aria-label="TechShop home">
+                <span class="brand-mark">E</span>
+                <span>TechShop</span>
+            </a>
+            <div class="catalog-wrap">
+                <button class="catalog-button" type="button" data-catalog-toggle aria-expanded="false" aria-haspopup="true">
+                    <span></span>
+                    {{ ui.catalog }}
+                </button>
+                <div class="catalog-mega" data-catalog-mega hidden aria-label="{{ ui.catalog_sections }}">
+                    <div class="catalog-side">
+                        <a class="active" href="{% url 'shop:products' %}?category=smartphones"><i>SP</i>{{ ui.smartphones }}</a>
+                        <a href="{% url 'shop:products' %}?category=refrigerators"><i>RF</i>{{ ui.refrigerators }}</a>
+                        <a href="{% url 'shop:products' %}?category=washers"><i>WM</i>{{ ui.washing_machines }}</a>
+                        <a href="{% url 'shop:products' %}?category=kitchen"><i>KT</i>{{ ui.home_appliances }}</a>
+                        <a href="{% url 'shop:products' %}?category=climate"><i>AC</i>{{ ui.conditioners }}</a>
+                        <a href="{% url 'shop:products' %}?category=tv"><i>TV</i>{{ ui.tv }}</a>
+                        <a href="{% url 'shop:products' %}?category=cleaning"><i>CL</i>{{ ui.cleaning_appliances }}</a>
+                    </div>
+                    <div class="catalog-content">
+                        <h3>{{ ui.home_appliances }}</h3>
+                        <div class="catalog-columns">
+                            <div>
+                                <h4>{{ ui.smartphones }}</h4>
+                                <a href="{% url 'shop:products' %}?category=smartphones">{{ ui.all_smartphones }}</a>
+                                <a href="{% url 'shop:products' %}?q=iPhone">iPhone</a>
+                                <a href="{% url 'shop:products' %}?q=Samsung">Samsung Galaxy</a>
+                                <a href="{% url 'shop:products' %}?q=Redmi">Redmi</a>
+                            </div>
+                            <div>
+                                <h4>{{ ui.large_appliances }}</h4>
+                                <a href="{% url 'shop:products' %}?category=refrigerators">{{ ui.refrigerators }}</a>
+                                <a href="{% url 'shop:products' %}?category=washers">{{ ui.washing_machines }}</a>
+                                <a href="{% url 'shop:products' %}?q=dishwasher">{{ ui.dishwashers }}</a>
+                                <a href="{% url 'shop:products' %}?q=oven">{{ ui.ovens }}</a>
+                            </div>
+                            <div>
+                                <h4>{{ ui.kitchen_for }}</h4>
+                                <a href="{% url 'shop:products' %}?q=microwave">{{ ui.microwaves }}</a>
+                                <a href="{% url 'shop:products' %}?q=air fryer">{{ ui.air_fryers }}</a>
+                                <a href="{% url 'shop:products' %}?q=coffee">{{ ui.coffee_machines }}</a>
+                                <a href="{% url 'shop:products' %}?q=blender">{{ ui.blenders }}</a>
+                                <a href="{% url 'shop:products' %}?q=meat grinder">{{ ui.meat_grinders }}</a>
+                            </div>
+                            <div>
+                                <h4>{{ ui.climate_care }}</h4>
+                                <a href="{% url 'shop:products' %}?category=climate">{{ ui.conditioners }}</a>
+                                <a href="{% url 'shop:products' %}?q=air purifier">{{ ui.air_purifiers }}</a>
+                                <a href="{% url 'shop:products' %}?q=water heater">{{ ui.water_heaters }}</a>
+                                <a href="{% url 'shop:products' %}?q=iron">{{ ui.irons }}</a>
+                                <a href="{% url 'shop:products' %}?q=hair dryer">{{ ui.hair_dryers }}</a>
+                            </div>
+                            <div>
+                                <h4>{{ ui.brands }}</h4>
+                                <a href="{% url 'shop:products' %}?q=Apple">Apple</a>
+                                <a href="{% url 'shop:products' %}?q=Redmi">Redmi</a>
+                                <a href="{% url 'shop:products' %}?q=LG">LG</a>
+                                <a href="{% url 'shop:products' %}?q=Samsung">Samsung</a>
+                                <a href="{% url 'shop:products' %}?q=Bosch">Bosch</a>
+                                <a href="{% url 'shop:products' %}?q=Philips">Philips</a>
+                                <a href="{% url 'shop:products' %}?q=Artel">Artel</a>
+                                <a href="{% url 'shop:products' %}?q=Beko">Beko</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form class="search-bar" action="{% url 'shop:products' %}" method="get">
+                <input name="q" value="{{ query }}" placeholder="{{ ui.search_placeholder }}">
+                <button type="submit" aria-label="{{ ui.search }}">{{ ui.search }}</button>
+            </form>
+            <nav class="market-actions">
+                <a class="market-action cart-pill" href="{% url 'shop:cart' %}" aria-label="{{ ui.cart }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 4h2l2.3 10.4a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 1.9-1.4L21 8H6"></path>
+                        <path d="M10 20h.01M18 20h.01"></path>
+                    </svg>
+                    <span class="cart-label">{{ ui.cart }}</span>
+                    {% if cart_count %}<b>{{ cart_count }}</b>{% endif %}
+                </a>
+                <a class="market-action favorite-nav" href="{% url 'shop:favorites' %}" aria-label="{{ ui.favorites }}" data-favorites-nav>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20.8 5.6a5.4 5.4 0 0 0-7.6 0L12 6.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 22l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z"></path>
+                    </svg>
+                    <span>{{ ui.favorites }}</span>
+                    <b class="{% if not favorites_count %}hidden{% endif %}" data-favorites-count>{{ favorites_count }}</b>
+                </a>
+                {% if auth_display %}
+                    <div class="account-menu" data-account-menu>
+                        <button class="market-action account-link" type="button" aria-label="{{ auth_display }}" aria-expanded="false" data-account-toggle>
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M20 21a8 8 0 0 0-16 0"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span>{{ auth_display }}</span>
+                        </button>
+                        <div class="account-dropdown" data-account-dropdown hidden>
+                            <div class="account-card-head">
+                                <span class="account-avatar">{{ auth_display|first|upper }}</span>
+                                <div>
+                                    <strong>{{ auth_display }}</strong>
+                                    {% if auth_email %}<small>{{ auth_email }}</small>{% elif auth_phone %}<small>{{ auth_phone }}</small>{% else %}<small>TechShop ID</small>{% endif %}
+                                </div>
+                            </div>
+                            <a class="account-row" href="{% url 'shop:login' %}">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 21a8 8 0 0 0-16 0"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                {{ ui.my_information }}
+                            </a>
+                            <a class="account-row" href="{% url 'shop:cart' %}">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h12l1 20-7-3-7 3 1-20Z"></path></svg>
+                                {{ ui.orders }}
+                            </a>
+                            <a class="account-row" href="{% url 'shop:favorites' %}">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 5.6a5.4 5.4 0 0 0-7.6 0L12 6.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 22l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z"></path></svg>
+                                {{ ui.favorites }}
+                            </a>
+                            <a class="account-logout" href="{% url 'shop:logout' %}?next={{ request.get_full_path|urlencode }}">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path></svg>
+                                {{ ui.logout }}
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a class="market-action login-trigger" href="{% url 'shop:login' %}?next={{ request.get_full_path|urlencode }}" aria-label="{{ ui.login }}">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20 21a8 8 0 0 0-16 0"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span>{{ ui.login }}</span>
+                    </a>
+                {% endif %}
+                <div class="language-switch compact" aria-label="Language switcher">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                        <input name="language" type="hidden" value="en">
+                        <button class="{% if current_language == 'en' %}active{% endif %}" type="submit">EN</button>
+                    </form>
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                        <input name="language" type="hidden" value="uz">
+                        <button class="{% if current_language == 'uz' %}active{% endif %}" type="submit">UZ</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {% if "cart-added" in message.tags %}
+                        <span class="message-icon" aria-hidden="true">OK</span>
+                    {% endif %}
+                    <span class="message-text">{{ message }}</span>
+                    {% if "cart-added" in message.tags %}
+                        <a href="{% url 'shop:cart' %}">{{ ui.shopping_cart }}</a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% if not is_login_page %}
+    <div class="auth-modal {% if request.GET.login %}open{% endif %}" data-login-modal>
+        <div class="auth-dialog">
+            <button class="auth-close" type="button" data-login-close aria-label="Close">x</button>
+            <div class="auth-brand">
+                <span class="brand-mark">E</span>
+                <b>TechShop ID</b>
+            </div>
+
+            {% if request.GET.login == "code" and auth_pending_phone %}
+                <h2 class="login-title">{{ ui.code_title }}</h2>
+                <form class="auth-form" action="{% url 'shop:verify_login_code' %}" method="post">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                    <label class="login-label" for="modal-phone-readonly">{{ ui.phone }}</label>
+                    <input id="modal-phone-readonly" type="text" value="{{ auth_pending_phone }}" readonly>
+                    <label class="login-label" for="modal-code">SMS kod</label>
+                    <input id="modal-code" name="code" inputmode="numeric" maxlength="4" placeholder="{{ ui.code_placeholder }}" autofocus>
+                    <button type="submit">{{ ui.sign_in }}</button>
+                </form>
+                <div class="demo-code">{{ ui.demo_code }}: <strong>{{ auth_demo_code }}</strong></div>
+                <button class="link-button resend-link" type="button" data-show-phone>{{ ui.change_phone }}</button>
+                <div class="auth-divider"><span>{{ ui.login_or|title }}</span></div>
+                <div class="social-login-row">
+                    <a class="social-login-button google" href="{% url 'shop:google_login' %}?next={{ request.get_full_path|urlencode }}" aria-label="{{ ui.login_with_google }}">
+                        <img src="{% static 'img/google-g.svg' %}" alt="">
+                        <span>Google</span>
+                    </a>
+                </div>
+            {% else %}
+                <h2 class="login-title">{{ ui.sign_in_or_create }}</h2>
+                <form class="auth-form" action="{% url 'shop:request_login_code' %}" method="post">
+                    {% csrf_token %}
+                    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                    <label class="login-label" for="modal-phone">{{ ui.phone }}</label>
+                    <input id="modal-phone" name="phone" inputmode="tel" placeholder="+998(__) ___-__-__" value="+998" autofocus>
+                    <button type="submit">{{ ui.get_code }}</button>
+                </form>
+                <div class="auth-divider"><span>{{ ui.login_or|title }}</span></div>
+                <div class="social-login-row">
+                    <a class="social-login-button google" href="{% url 'shop:google_login' %}?next={{ request.get_full_path|urlencode }}" aria-label="{{ ui.login_with_google }}">
+                        <img src="{% static 'img/google-g.svg' %}" alt="">
+                        <span>Google</span>
+                    </a>
+                </div>
+            {% endif %}
+            <p class="auth-agreement">{{ ui.agreement }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <footer class="footer">
+        <div>
+            <strong>TechShop</strong>
+            <p>{{ ui.footer_text }}</p>
+        </div>
+        <div class="footer-links">
+            <a href="{% url 'shop:products' %}">{{ ui.catalog }}</a>
+            <a href="{% url 'shop:checkout' %}">{{ ui.checkout }}</a>
+            <a href="{% url 'shop:contact' %}">{{ ui.support }}</a>
+        </div>
+    </footer>
+    <script src="{% static 'js/main.js' %}?v=20260513-2"></script>
+</body>
+</html>

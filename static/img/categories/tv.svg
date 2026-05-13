@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" role="img" aria-label="TV">
+  <rect width="260" height="180" rx="24" fill="#f8fafc"/>
+  <rect x="34" y="33" width="192" height="106" rx="12" fill="#111827"/>
+  <rect x="44" y="43" width="172" height="86" rx="7" fill="url(#tvscreen)"/>
+  <path d="M114 140h32v14h36" stroke="#334155" stroke-width="7" stroke-linecap="round"/>
+  <path d="M146 154H78" stroke="#334155" stroke-width="7" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="tvscreen" x1="44" x2="216" y1="43" y2="129">
+      <stop stop-color="#f472b6"/>
+      <stop offset=".45" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#facc15"/>
+    </linearGradient>
+  </defs>
+</svg>

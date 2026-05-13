@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.order_accepted }} | TechShop{% endblock %}
+{% block content %}
+<section class="order-success">
+    <div class="success-hero">
+        <div class="success-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+                <path d="m5 12 4 4L19 6"></path>
+            </svg>
+        </div>
+        <span class="eyebrow">{{ ui.order_status }}: {{ ui.status_new }}</span>
+        <h1>{{ ui.order_accepted }}</h1>
+        <p>{{ ui.order_accepted_text }}</p>
+    </div>
+
+    <div class="success-layout">
+        <section class="success-card order-info-card">
+            <div class="order-meta-grid">
+                <div>
+                    <span>{{ ui.order_number }}</span>
+                    <strong>{{ order.number }}</strong>
+                </div>
+                <div>
+                    <span>{{ ui.order_date }}</span>
+                    <strong>{{ order.date }}</strong>
+                </div>
+                <div>
+                    <span>{{ ui.recipient }}</span>
+                    <strong>{{ order.full_name }}</strong>
+                    <small>{{ order.phone }}</small>
+                </div>
+                <div>
+                    <span>{{ ui.payment }}</span>
+                    <strong>{{ order.payment_method }}</strong>
+                    <small>{{ order.delivery_method }}</small>
+                </div>
+            </div>
+
+            <div class="delivery-confirm">
+                <span class="choice-icon">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.3 7-12a7 7 0 0 0-14 0c0 6.7 7 12 7 12Z"></path><circle cx="12" cy="9" r="2"></circle></svg>
+                </span>
+                <div>
+                    <span>{{ ui.delivery_address }}</span>
+                    <strong>{{ order.city }}, {{ order.address }}</strong>
+                </div>
+            </div>
+
+            <div class="manager-note">
+                <b>{{ ui.manager_call }}</b>
+                <p>{{ ui.manager_call_text }}</p>
+            </div>
+        </section>
+
+        <aside class="success-card success-summary">
+            <h2>{{ ui.your_items }}</h2>
+            <div class="summary-items">
+                {% for item in order.items %}
+                    <div class="summary-product">
+                        <img src="{{ item.image }}?v=20260512-9" alt="{{ item.name }}">
+                        <span>{{ item.name }} <small>x {{ item.quantity }}</small></span>
+                        <strong>{{ item.subtotal_display }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="summary-total"><span>{{ ui.total }}</span><strong>{{ order.total_display }}</strong></div>
+            <div class="success-actions">
+                <a class="btn primary full" href="{% url 'shop:home' %}">{{ ui.go_home }}</a>
+                <a class="btn ghost full" href="{% url 'shop:products' %}">{{ ui.continue_shopping }}</a>
+            </div>
+        </aside>
+    </div>
+</section>
+{% endblock %}

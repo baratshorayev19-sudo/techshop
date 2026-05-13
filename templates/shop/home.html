@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}TechShop | {{ ui.home_appliances }}{% endblock %}
+{% block content %}
+<section class="market-shell">
+    <section class="market-hero">
+        <div>
+            <span class="ad-label">{{ ui.ad }}</span>
+            <p class="eyebrow">{{ ui.new_season }}</p>
+            <h1>{{ ui.hero_title }}</h1>
+            <p>{{ ui.hero_text }}</p>
+            <a class="btn primary" href="{% url 'shop:products' %}">{{ ui.shop_catalog }}</a>
+        </div>
+        <div class="hero-appliance-grid">
+            {% for product in featured|slice:":4" %}
+                <a href="{% url 'shop:product_detail' product.slug %}">
+                    <img src="{{ product.image }}?v=20260512-9" alt="{{ product.name }}">
+                    <b>{{ product.name }}</b>
+                    <span>{{ product.price_display }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    </section>
+
+    <nav class="quick-cats" aria-label="{{ ui.catalog_sections }}">
+        <a class="quick-cat-card sale-card" href="{% url 'shop:products' %}?sort=price_asc">
+            <span>{{ ui.sales_discounts }}</span>
+            <img src="{% static 'img/categories/sale.svg' %}" alt="{{ ui.sales_discounts }}">
+        </a>
+        <a class="quick-cat-card" href="{% url 'shop:products' %}?category=smartphones">
+            <span>{{ ui.smartphones }}</span>
+            <img src="https://mini-io-api.texnomart.uz/catalog/special-category/4/aa4237cb-9bc4-4941-8535-277ca7831f48.png" alt="{{ ui.smartphones }}">
+        </a>
+        <a class="quick-cat-card" href="{% url 'shop:products' %}?category=climate">
+            <span>{{ ui.air_conditioners }}</span>
+            <img src="https://mini-io-api.texnomart.uz/catalog/special-category/8/61521f46-27bb-4ba1-8fa7-34f3bc6e9530.png" alt="{{ ui.air_conditioners }}">
+        </a>
+        <a class="quick-cat-card" href="{% url 'shop:products' %}?q=vacuum">
+            <span>{{ ui.vacuum_cleaners }}</span>
+            <img src="https://mini-io-api.texnomart.uz/catalog/special-category/5/ade607e8-e08e-40a1-85c1-b291327fe412.png" alt="{{ ui.vacuum_cleaners }}">
+        </a>
+        <a class="quick-cat-card" href="{% url 'shop:products' %}?category=refrigerators">
+            <span>{{ ui.refrigerators }}</span>
+            <img src="https://mini-io-api.texnomart.uz/catalog/special-category/7/74a09808-7198-496a-b704-158399923abd.png" alt="{{ ui.refrigerators }}">
+        </a>
+        <a class="quick-cat-card" href="{% url 'shop:products' %}?category=laptops">
+            <span>{{ ui.laptops }}</span>
+            <img src="https://mini-io-api.texnomart.uz/catalog/special-category/22/1f3896fc-fbb9-4d2f-ac2e-17df4bf4959b.png" alt="{{ ui.laptops }}">
+        </a>
+        <a class="quick-cat-card" href="{% url 'shop:products' %}?category=tv">
+            <span>{{ ui.tv }}</span>
+            <img src="https://mini-io-api.texnomart.uz/catalog/special-category/9/e84d9227-6eef-4f6c-94f4-a26258c5d5a1.png" alt="{{ ui.tv }}">
+        </a>
+        <a class="quick-cat-card" href="{% url 'shop:products' %}?q=coffee">
+            <span>{{ ui.coffee_machines }}</span>
+            <img src="https://mini-io-api.texnomart.uz/catalog/special-category/23/a206c805-83f1-4965-9da7-876b8124fcee.png" alt="{{ ui.coffee_machines }}">
+        </a>
+    </nav>
+
+    <section class="promo-row">
+        <a href="{% url 'shop:products' %}?sort=price_asc">{{ ui.market_deals }}</a>
+        <a href="{% url 'shop:products' %}?category=kitchen">{{ ui.kitchen_deals }}</a>
+        <a href="{% url 'shop:products' %}?category=climate">{{ ui.seasonal_appliances }}</a>
+        <a href="{% url 'shop:products' %}?category=washers">{{ ui.home_comfort }}</a>
+    </section>
+
+    <section class="section compact-section" id="featured">
+        <div class="section-heading">
+            <h2>{{ ui.featured_products }}</h2>
+            <a href="{% url 'shop:products' %}">{{ ui.view_all }}</a>
+        </div>
+        <div class="product-grid market-grid">
+            {% for product in products %}
+                {% include "shop/_product_card.html" %}
+            {% endfor %}
+        </div>
+    </section>
+</section>
+{% endblock %}

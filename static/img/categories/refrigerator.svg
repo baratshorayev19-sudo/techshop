@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 180" role="img" aria-label="Refrigerator">
+  <rect width="260" height="180" rx="24" fill="#f8fafc"/>
+  <rect x="82" y="20" width="98" height="142" rx="16" fill="#e5e7eb" stroke="#cbd5e1" stroke-width="4"/>
+  <path d="M131 21v140" stroke="#cbd5e1" stroke-width="4"/>
+  <rect x="98" y="61" width="8" height="36" rx="4" fill="#64748b"/>
+  <rect x="155" y="61" width="8" height="36" rx="4" fill="#64748b"/>
+  <path d="M46 118c28-9 32-38 62-36" fill="none" stroke="#22c55e" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="59" cy="113" r="8" fill="#f97316"/>
+  <circle cx="76" cy="98" r="6" fill="#ef4444"/>
+</svg>

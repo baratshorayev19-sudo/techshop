@@ -1,0 +1,37 @@
+<article class="product-card reveal">
+    <a class="product-media" href="{% url 'shop:product_detail' product.slug %}">
+        <img src="{{ product.image }}?v=20260512-9" alt="{{ product.name }}" loading="lazy">
+        <span class="badge">{{ product.badge }}</span>
+    </a>
+    <form class="favorite-form" method="post" action="{% url 'shop:toggle_favorite' product.slug %}" data-favorite-form>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button class="favorite-btn {% if product.is_favorite %}active{% endif %}" type="submit" aria-label="{{ ui.favorites }}" data-favorite-button>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 5.6a5.4 5.4 0 0 0-7.6 0L12 6.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 22l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z"></path>
+            </svg>
+        </button>
+    </form>
+    <div class="product-body">
+        <div class="muted">{{ product.brand }} &middot; {{ product.category_label }}</div>
+        <h3><a href="{% url 'shop:product_detail' product.slug %}">{{ product.name }}</a></h3>
+        <p>{{ product.short }}</p>
+        <div class="installment">12 oyga {{ product.monthly_price_display }} dan</div>
+        <div class="rating" aria-label="{{ product.rating }} {{ ui.out_of_stars }}">
+            <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <b>{{ product.rating }}</b>
+            <small>({{ product.reviews }})</small>
+        </div>
+        <div class="product-actions">
+            <div class="price">
+                <strong>{{ product.price_display }}</strong>
+                <del>{{ product.old_price_display }}</del>
+            </div>
+            <form method="post" action="{% url 'shop:add_to_cart' product.slug %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="icon-btn" type="submit" aria-label="{{ ui.add_to_cart }}">+</button>
+            </form>
+        </div>
+    </div>
+</article>

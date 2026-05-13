@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }} | TechShop{% endblock %}
+{% block content %}
+<section class="detail-layout">
+    <div class="detail-media reveal">
+        {% if product.gallery|length > 1 %}
+            <button class="gallery-arrow prev" type="button" data-gallery-prev aria-label="Previous image">&lsaquo;</button>
+        {% endif %}
+        <img class="detail-main-image" src="{{ product.image }}?v=20260512-9" alt="{{ product.name }}" data-gallery-main>
+        {% if product.gallery|length > 1 %}
+            <button class="gallery-arrow next" type="button" data-gallery-next aria-label="Next image">&rsaquo;</button>
+        {% endif %}
+        {% if product.gallery|length > 1 %}
+            <div class="detail-thumbs" aria-label="Product image gallery">
+                {% for image in product.gallery %}
+                    <button class="{% if forloop.first %}active{% endif %}" type="button" data-gallery-thumb data-src="{{ image }}?v=20260512-9" aria-label="{{ product.name }} image {{ forloop.counter }}">
+                        <img src="{{ image }}?v=20260512-9" alt="">
+                    </button>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="detail-info reveal">
+        <span class="badge">{{ product.badge }}</span>
+        <h1>{{ product.name }}</h1>
+        <p class="lead">{{ product.description }}</p>
+        <div class="rating"><span>&#9733;&#9733;&#9733;&#9733;&#9733;</span><b>{{ product.rating }}</b><small>{{ visible_review_count }} {{ ui.reviews }}</small></div>
+        <div class="detail-price"><strong>{{ product.price_display }}</strong><del>{{ product.old_price_display }}</del></div>
+        <form class="detail-favorite-form" method="post" action="{% url 'shop:toggle_favorite' product.slug %}" data-favorite-form>
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <button class="detail-favorite-btn {% if product.is_favorite %}active{% endif %}" type="submit" data-favorite-button>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.8 5.6a5.4 5.4 0 0 0-7.6 0L12 6.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 22l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z"></path>
+                </svg>
+                <span>{{ ui.favorites }}</span>
+            </button>
+        </form>
+        <ul class="spec-list">
+            {% for spec in product.specs %}
+                <li>{{ spec }}</li>
+            {% endfor %}
+        </ul>
+        <form class="buy-box" method="post" action="{% url 'shop:add_to_cart' product.slug %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <label for="quantity">{{ ui.quantity }}</label>
+            <div class="quantity-stepper" data-quantity-stepper>
+                <button type="button" data-step="-1" aria-label="Decrease quantity">-</button>
+                <input id="quantity" type="number" name="quantity" value="1" min="1" max="10" readonly>
+                <button type="button" data-step="1" aria-label="Increase quantity">+</button>
+            </div>
+            <button class="btn primary" type="submit">{{ ui.add_to_cart }}</button>
+        </form>
+    </div>
+</section>
+
+<section class="section review-section">
+    <div class="section-heading">
+        <h2>{{ ui.reviews_title }}</h2>
+        <span>{{ visible_review_count }} {{ ui.reviews }}</span>
+    </div>
+    <div class="review-layout">
+        <div class="review-list">
+            {% for review in product_reviews %}
+                <article class="review-card">
+                    <div>
+                        <strong>{{ review.name }}</strong>
+                        <span>{{ review.rating }} / 5</span>
+                    </div>
+                    <p>{{ review.text }}</p>
+                </article>
+            {% empty %}
+                <div class="empty-state">{{ ui.no_reviews }}</div>
+            {% endfor %}
+        </div>
+        <form class="review-form" method="post">
+            {% csrf_token %}
+            {{ review_form.name.label_tag }}
+            {{ review_form.name }}
+            {{ review_form.rating.label_tag }}
+            {{ review_form.rating }}
+            {{ review_form.text.label_tag }}
+            {{ review_form.text }}
+            <button class="btn primary full" type="submit">{{ ui.send_review }}</button>
+        </form>
+    </div>
+</section>
+
+{% if related %}
+<section class="section">
+    <div class="section-heading">
+        <h2>{{ ui.related_products }}</h2>
+    </div>
+    <div class="product-grid">
+        {% for product in related %}
+            {% include "shop/_product_card.html" %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.favorites }} | TechShop{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+    <span class="eyebrow">{{ ui.favorites }}</span>
+    <h1>{{ ui.favorites }}</h1>
+</section>
+
+<section class="section">
+    <div class="catalog-top">
+        <strong>{{ products|length }} {{ ui.products_found }}</strong>
+        <span>{{ ui.ready_to_order }}</span>
+    </div>
+    <div class="product-grid">
+        {% for product in products %}
+            {% include "shop/_product_card.html" %}
+        {% empty %}
+            <div class="empty-state">{{ ui.no_favorites }}</div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
