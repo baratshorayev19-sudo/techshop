@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from .data import format_price, get_product
 
 
@@ -388,7 +390,8 @@ UI_TEXT = {
 
 
 def current_language(request):
-    return (getattr(request, "LANGUAGE_CODE", None) or request.session.get("django_language") or "en").split("-")[0]
+    explicit_language = request.session.get("django_language") or request.COOKIES.get(settings.LANGUAGE_COOKIE_NAME)
+    return (explicit_language or settings.LANGUAGE_CODE or "uz").split("-")[0]
 
 
 def ui_text(request):

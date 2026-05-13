@@ -86,7 +86,7 @@ DATABASES = {
     }
 }
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "uz"
 LANGUAGES = [
     ("en", "English"),
     ("uz", "Uzbek"),
