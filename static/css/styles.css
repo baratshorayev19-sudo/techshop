@@ -3005,6 +3005,214 @@ html[data-theme="dark"] .footer-links a:hover {
     color: #67e8f9;
 }
 
+/* Calm premium dark mode: dashboard-style, less glare */
+html[data-theme="dark"] body {
+    color: #f4f7fb;
+    background:
+        radial-gradient(circle at 18% -8%, rgba(99, 102, 241, .16), transparent 28rem),
+        radial-gradient(circle at 88% 0%, rgba(20, 184, 166, .10), transparent 30rem),
+        linear-gradient(180deg, #07080d 0%, #0a0c12 42%, #080a0f 100%);
+}
+
+html[data-theme="dark"] .market-header {
+    background: rgba(8, 10, 15, .94);
+    border-bottom-color: rgba(255, 255, 255, .08);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .03), 0 18px 60px rgba(0, 0, 0, .22);
+}
+
+html[data-theme="dark"] .market-brand .brand-mark {
+    background: linear-gradient(135deg, #6574ff, #16a3b8);
+    box-shadow: 0 12px 34px rgba(101, 116, 255, .28);
+}
+
+html[data-theme="dark"] .catalog-button {
+    color: #70e2ee;
+    background: rgba(22, 163, 184, .12);
+    border: 1px solid rgba(112, 226, 238, .20);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+}
+
+html[data-theme="dark"] .search-bar {
+    background: #11141d;
+    border-color: #252a36;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+html[data-theme="dark"] .search-bar input,
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+    color: #f1f5f9;
+    background: #11141d;
+    border-color: #252a36;
+}
+
+html[data-theme="dark"] .search-bar button {
+    color: #fff;
+    background: linear-gradient(135deg, #4f66e8, #0f6f86);
+}
+
+html[data-theme="dark"] .market-actions .market-action,
+html[data-theme="dark"] .market-actions .market-action svg {
+    color: #d7def0;
+}
+
+html[data-theme="dark"] .market-actions .market-action span {
+    color: #f4f7fb;
+}
+
+html[data-theme="dark"] .market-actions .market-action:hover,
+html[data-theme="dark"] .account-menu.is-open .account-link,
+html[data-theme="dark"] .account-menu .account-link:hover {
+    background: rgba(255, 255, 255, .055);
+}
+
+html[data-theme="dark"] .theme-switch,
+html[data-theme="dark"] .language-switch.compact {
+    background: #11141d;
+    border-color: #293040;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 14px 34px rgba(0, 0, 0, .28);
+}
+
+html[data-theme="dark"] .theme-switch button.active,
+html[data-theme="dark"] .language-switch.compact button.active {
+    background: linear-gradient(135deg, #5f6ff1, #1aa4bd);
+    box-shadow: 0 10px 24px rgba(95, 111, 241, .25);
+}
+
+html[data-theme="dark"] .market-hero {
+    color: #fff;
+    background:
+        radial-gradient(circle at 80% 12%, rgba(95, 111, 241, .18), transparent 24rem),
+        radial-gradient(circle at 35% 80%, rgba(20, 184, 166, .12), transparent 24rem),
+        linear-gradient(135deg, #0d111b 0%, #0f2b2d 58%, #10204a 100%);
+    border: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: 0 26px 70px rgba(0, 0, 0, .34);
+}
+
+html[data-theme="dark"] .market-hero h1 {
+    color: #f8fafc;
+    text-shadow: 0 10px 34px rgba(0, 0, 0, .32);
+}
+
+html[data-theme="dark"] .market-hero p,
+html[data-theme="dark"] .market-hero .eyebrow {
+    color: rgba(226, 232, 240, .78);
+}
+
+html[data-theme="dark"] .hero-appliance-grid a {
+    background: rgba(255, 255, 255, .075);
+    border: 1px solid rgba(255, 255, 255, .09);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+html[data-theme="dark"] .hero-appliance-grid span {
+    color: #f8dc75;
+}
+
+html[data-theme="dark"] .quick-cat-card,
+html[data-theme="dark"] .problem-section,
+html[data-theme="dark"] .problem-grid article,
+html[data-theme="dark"] .product-card,
+html[data-theme="dark"] .filters,
+html[data-theme="dark"] .summary,
+html[data-theme="dark"] .checkout-form,
+html[data-theme="dark"] .checkout-card,
+html[data-theme="dark"] .checkout-summary,
+html[data-theme="dark"] .contact-card,
+html[data-theme="dark"] .cart-row,
+html[data-theme="dark"] .review-card,
+html[data-theme="dark"] .review-form,
+html[data-theme="dark"] .success-card,
+html[data-theme="dark"] .success-summary,
+html[data-theme="dark"] .compare-table,
+html[data-theme="dark"] .detail-media,
+html[data-theme="dark"] .profile-panel,
+html[data-theme="dark"] .login-panel,
+html[data-theme="dark"] .auth-dialog,
+html[data-theme="dark"] .account-dropdown,
+html[data-theme="dark"] .catalog-mega {
+    color: #eef2f7;
+    background: #171a22;
+    border-color: #2a2f3b;
+    box-shadow: 0 18px 46px rgba(0, 0, 0, .26), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+html[data-theme="dark"] .quick-cat-card:hover,
+html[data-theme="dark"] .product-card:hover,
+html[data-theme="dark"] .problem-grid article:hover {
+    border-color: rgba(101, 116, 255, .36);
+    box-shadow: 0 22px 56px rgba(0, 0, 0, .34);
+}
+
+html[data-theme="dark"] .quick-cat-card {
+    background: linear-gradient(180deg, #191d26, #121722);
+}
+
+html[data-theme="dark"] .quick-cat-card.sale-card {
+    background: linear-gradient(135deg, rgba(245, 158, 11, .13), #171a22);
+}
+
+html[data-theme="dark"] .promo-row a {
+    color: #f7f9fd;
+    background: linear-gradient(180deg, #171a22, #121722);
+    border: 1px solid #2a2f3b;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+html[data-theme="dark"] .product-media,
+html[data-theme="dark"] .detail-main-image,
+html[data-theme="dark"] .detail-thumbs button,
+html[data-theme="dark"] .hero-appliance-grid img {
+    background: #f8fafc;
+    border-color: rgba(255, 255, 255, .08);
+}
+
+html[data-theme="dark"] .price strong,
+html[data-theme="dark"] .detail-price strong,
+html[data-theme="dark"] .rating b,
+html[data-theme="dark"] .rating small {
+    color: #f8fafc;
+}
+
+html[data-theme="dark"] .problem-intro p,
+html[data-theme="dark"] .problem-grid p,
+html[data-theme="dark"] .muted,
+html[data-theme="dark"] .product-body p,
+html[data-theme="dark"] .cart-row p,
+html[data-theme="dark"] .footer p,
+html[data-theme="dark"] .auth-agreement,
+html[data-theme="dark"] .login-label,
+html[data-theme="dark"] .profile-head p {
+    color: #9aa5b8;
+}
+
+html[data-theme="dark"] .problem-grid b {
+    color: #b7c3ff;
+    background: rgba(101, 116, 255, .14);
+}
+
+html[data-theme="dark"] .catalog-side {
+    background: #11141d;
+    border-color: #2a2f3b;
+}
+
+html[data-theme="dark"] .catalog-side a:hover,
+html[data-theme="dark"] .catalog-side a.active {
+    background: rgba(101, 116, 255, .14);
+}
+
+html[data-theme="dark"] .catalog-mega::before,
+html[data-theme="dark"] .account-dropdown::before {
+    background: #171a22;
+    border-color: #2a2f3b;
+}
+
+html[data-theme="dark"] .footer {
+    background: #07080d;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
 @media (max-width: 1180px) {
     .market-nav {
         grid-template-columns: auto auto 1fr;
