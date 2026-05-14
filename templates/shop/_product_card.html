@@ -15,16 +15,10 @@
     <div class="product-body">
         <div class="product-meta">{{ product.brand }} &middot; {{ product.category_label }}</div>
         <h3><a href="{% url 'shop:product_detail' product.slug %}">{{ product.name }}</a></h3>
-        <p>{{ product.short }}</p>
-        <div class="product-card-row">
-            <div class="stock-chip {{ product.stock.level }}">{{ product.stock.label }}</div>
-        </div>
         <div class="rating" aria-label="{{ product.rating }} {{ ui.out_of_stars }}">
-            <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span>&#9733;</span>
             <b>{{ product.rating }}</b>
-            <small>({{ product.reviews }})</small>
         </div>
-        <div class="installment">12 oyga {{ product.monthly_price_display }}</div>
         <div class="product-actions">
             <div class="price">
                 <strong>{{ product.price_display }}</strong>
@@ -40,6 +34,9 @@
                     </svg>
                 </button>
             </form>
+        </div>
+        <div class="product-card-foot">
+            <span class="stock-dot {{ product.stock.level }}">{{ product.stock.label }}</span>
         </div>
         <form class="compare-form" method="post" action="{% url 'shop:toggle_compare' product.slug %}">
             {% csrf_token %}

@@ -38,10 +38,10 @@ def _stock_status(product, language):
         label = "Mavjud emas" if language == "uz" else "Out of stock"
         level = "out"
     elif quantity <= 5:
-        label = f"Kam qoldi: {quantity} dona" if language == "uz" else f"Low stock: {quantity} left"
+        label = "Kam qoldi" if language == "uz" else "Low stock"
         level = "low"
     else:
-        label = f"Mavjud: {quantity} dona" if language == "uz" else f"In stock: {quantity}"
+        label = "Mavjud" if language == "uz" else "In stock"
         level = "in"
     return {"quantity": quantity, "label": label, "level": level, "is_available": quantity > 0}
 
