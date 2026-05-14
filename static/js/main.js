@@ -1,5 +1,24 @@
 const navToggle = document.querySelector("[data-nav-toggle]");
 const nav = document.querySelector("[data-nav]");
+const themeButtons = document.querySelectorAll("[data-theme-choice]");
+
+const setTheme = (theme) => {
+    const nextTheme = theme === "dark" ? "dark" : "light";
+    document.documentElement.dataset.theme = nextTheme;
+    localStorage.setItem("techshop-theme", nextTheme);
+    themeButtons.forEach((button) => {
+        const isActive = button.dataset.themeChoice === nextTheme;
+        button.classList.toggle("active", isActive);
+        button.setAttribute("aria-pressed", String(isActive));
+    });
+};
+
+if (themeButtons.length) {
+    setTheme(document.documentElement.dataset.theme || "light");
+    themeButtons.forEach((button) => {
+        button.addEventListener("click", () => setTheme(button.dataset.themeChoice));
+    });
+}
 
 if (navToggle && nav) {
     navToggle.addEventListener("click", () => {

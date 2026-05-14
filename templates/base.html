@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html lang="{{ current_language }}">
+<html lang="{{ current_language }}" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=20260514-3">
+    <script>
+        (function () {
+            var savedTheme = localStorage.getItem("techshop-theme");
+            var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+            document.documentElement.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
+        })();
+    </script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=20260514-4">
 </head>
 <body>
     <header class="market-header">
@@ -154,6 +161,19 @@
                         <span>{{ ui.login }}</span>
                     </a>
                 {% endif %}
+                <div class="theme-switch" aria-label="Rang rejimi">
+                    <button type="button" data-theme-choice="light" aria-label="Yorug' rejim" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                        </svg>
+                    </button>
+                    <button type="button" data-theme-choice="dark" aria-label="Qorong'u rejim" aria-pressed="false">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8Z"></path>
+                        </svg>
+                    </button>
+                </div>
                 <div class="language-switch compact" aria-label="Language switcher">
                     <form action="{% url 'set_language' %}" method="post">
                         {% csrf_token %}
@@ -254,6 +274,6 @@
             <a href="{% url 'shop:contact' %}">{{ ui.support }}</a>
         </div>
     </footer>
-    <script src="{% static 'js/main.js' %}?v=20260514-3"></script>
+    <script src="{% static 'js/main.js' %}?v=20260514-4"></script>
 </body>
 </html>
