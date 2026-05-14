@@ -164,7 +164,9 @@ document.querySelectorAll("[data-favorite-form]").forEach((form) => {
             }
             setFavoriteCount(result.favorites_count);
         } catch (error) {
-            form.submit();
+            if (button) {
+                button.classList.toggle("active");
+            }
         } finally {
             if (button) {
                 button.disabled = false;

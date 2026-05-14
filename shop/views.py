@@ -11,6 +11,7 @@ from urllib.error import URLError
 from urllib.parse import parse_qsl, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
 import base64
+import difflib
 import json
 import random
 from datetime import datetime
@@ -44,6 +45,68 @@ def _stock_status(product, language):
         label = "Mavjud" if language == "uz" else "In stock"
         level = "in"
     return {"quantity": quantity, "label": label, "level": level, "is_available": quantity > 0}
+
+
+def _normalize_search_text(value):
+    text = str(value or "").lower()
+    for char in "-_/.,:;()[]{}'\"`+&":
+        text = text.replace(char, " ")
+    return " ".join(text.split())
+
+
+def _search_text(product, language):
+    localized = localize_product(product, language)
+    parts = [
+        product.get("name", ""),
+        product.get("brand", ""),
+        product.get("short", ""),
+        product.get("category", ""),
+        localized.get("name", ""),
+        localized.get("category_label", ""),
+        localized.get("description", ""),
+    ]
+    parts.extend(product.get("specs", []))
+    return _normalize_search_text(" ".join(str(part) for part in parts if part))
+
+
+def _matches_smart_search(product, query, language):
+    normalized_query = _normalize_search_text(query)
+    if not normalized_query:
+        return True
+
+    haystack = _search_text(product, language)
+    if normalized_query in haystack:
+        return True
+
+    query_words = normalized_query.split()
+    haystack_words = haystack.split()
+    if not haystack_words:
+        return False
+
+    matched_words = 0
+    for word in query_words:
+        if len(word) <= 2:
+            if any(item.startswith(word) for item in haystack_words):
+                matched_words += 1
+            continue
+        if any(word in item or (len(item) > 2 and item in word) for item in haystack_words):
+            matched_words += 1
+            continue
+        close = any(
+            item[0] == word[0]
+            and abs(len(item) - len(word)) <= 2
+            and difflib.SequenceMatcher(None, word, item).ratio() >= 0.76
+            for item in haystack_words
+            if item
+        )
+        if close:
+            matched_words += 1
+
+    needed_matches = len(query_words) if len(query_words) <= 2 else len(query_words) - 1
+    if matched_words and matched_words >= needed_matches:
+        return True
+
+    return False
 
 
 def _attach_product_state(localized, source, language, request):
@@ -125,7 +188,7 @@ def home(request):
 
 def products(request):
     language = current_language(request)
-    query = request.GET.get("q", "").strip().lower()
+    query = request.GET.get("q", "").strip()
     category = request.GET.get("category", "all")
     max_price = request.GET.get("max_price", "")
     sort = request.GET.get("sort", "featured")
@@ -134,13 +197,7 @@ def products(request):
     if category != "all":
         filtered = [product for product in filtered if product["category"] == category]
     if query:
-        filtered = [
-            product
-            for product in filtered
-            if query in product["name"].lower()
-            or query in product["brand"].lower()
-            or query in product["short"].lower()
-        ]
+        filtered = [product for product in filtered if _matches_smart_search(product, query, language)]
     if max_price:
         try:
             max_price_usd = price_to_usd(int(max_price.replace(" ", "")), language)
