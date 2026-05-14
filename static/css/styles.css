@@ -1798,10 +1798,14 @@ body {
 }
 
 .theme-switch button {
-    display: grid;
-    place-items: center;
-    width: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: auto;
+    min-width: 62px;
     height: 34px;
+    padding: 0 10px;
     border: 0;
     border-radius: 999px;
     color: #64748b;
@@ -1822,13 +1826,19 @@ body {
 }
 
 .theme-switch svg {
-    width: 19px;
-    height: 19px;
+    width: 17px;
+    height: 17px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
+}
+
+.theme-switch span {
+    color: inherit;
+    font-size: 12px;
+    font-weight: 900;
 }
 
 .market-shell {
@@ -3970,9 +3980,9 @@ html[data-theme="dark"] .filters .btn.subtle {
 
     .theme-switch button,
     .language-switch.compact button {
-        width: 32px;
-        min-width: 32px;
+        min-width: 52px;
         height: 32px;
+        padding: 0 8px;
     }
 }
 
