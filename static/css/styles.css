@@ -1948,6 +1948,58 @@ body {
     text-align: center;
 }
 
+.problem-section {
+    display: grid;
+    grid-template-columns: minmax(280px, .9fr) minmax(520px, 1.1fr);
+    gap: 24px;
+    align-items: start;
+    margin: 22px 0 36px;
+    padding: 28px;
+    border: 1px solid #e9eef5;
+    border-radius: 16px;
+    background: #f8fafc;
+}
+
+.problem-intro h2 {
+    margin: 8px 0 12px;
+    font-size: clamp(28px, 3vw, 42px);
+    line-height: 1.08;
+}
+
+.problem-intro p,
+.problem-grid p {
+    margin: 0;
+    color: #5f6b7a;
+    line-height: 1.55;
+}
+
+.problem-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.problem-grid article {
+    display: grid;
+    gap: 8px;
+    min-height: 168px;
+    padding: 18px;
+    border: 1px solid #e4eaf2;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.problem-grid b {
+    color: #0f8b8d;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.problem-grid h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
 .compact-section {
     max-width: none;
     padding: 0;
@@ -2628,6 +2680,14 @@ body {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .problem-section {
+        grid-template-columns: 1fr;
+    }
+
+    .problem-grid {
+        grid-template-columns: 1fr;
+    }
+
     .market-grid,
     .product-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2758,6 +2818,20 @@ body {
 
     .promo-row {
         grid-template-columns: 1fr;
+    }
+
+    .problem-section {
+        margin: 16px 0 28px;
+        padding: 18px 14px;
+    }
+
+    .problem-intro h2 {
+        font-size: 26px;
+    }
+
+    .problem-grid article {
+        min-height: 0;
+        padding: 15px;
     }
 
     .hero-appliance-grid {

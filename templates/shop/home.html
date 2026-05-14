@@ -63,6 +63,36 @@
         <a href="{% url 'shop:products' %}?category=washers">{{ ui.home_comfort }}</a>
     </section>
 
+    <section class="problem-section">
+        <div class="problem-intro">
+            <span class="eyebrow">{{ ui.why }}</span>
+            <h2>{{ ui.problem_solution_title }}</h2>
+            <p>{{ ui.problem_solution_text }}</p>
+        </div>
+        <div class="problem-grid">
+            <article>
+                <b>01</b>
+                <h3>{{ ui.problem_1 }}</h3>
+                <p>{{ ui.solution_1 }}</p>
+            </article>
+            <article>
+                <b>02</b>
+                <h3>{{ ui.problem_2 }}</h3>
+                <p>{{ ui.solution_2 }}</p>
+            </article>
+            <article>
+                <b>03</b>
+                <h3>{{ ui.problem_3 }}</h3>
+                <p>{{ ui.solution_3 }}</p>
+            </article>
+            <article>
+                <b>04</b>
+                <h3>{{ ui.problem_4 }}</h3>
+                <p>{{ ui.solution_4 }}</p>
+            </article>
+        </div>
+    </section>
+
     <section class="section compact-section" id="featured">
         <div class="section-heading">
             <h2>{{ ui.featured_products }}</h2>
