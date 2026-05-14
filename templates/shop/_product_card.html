@@ -13,16 +13,18 @@
         </button>
     </form>
     <div class="product-body">
-        <div class="muted">{{ product.brand }} &middot; {{ product.category_label }}</div>
+        <div class="product-meta">{{ product.brand }} &middot; {{ product.category_label }}</div>
         <h3><a href="{% url 'shop:product_detail' product.slug %}">{{ product.name }}</a></h3>
         <p>{{ product.short }}</p>
-        <div class="stock-chip {{ product.stock.level }}">{{ product.stock.label }}</div>
-        <div class="installment">12 oyga {{ product.monthly_price_display }} dan</div>
+        <div class="product-card-row">
+            <div class="stock-chip {{ product.stock.level }}">{{ product.stock.label }}</div>
+        </div>
         <div class="rating" aria-label="{{ product.rating }} {{ ui.out_of_stars }}">
             <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
             <b>{{ product.rating }}</b>
             <small>({{ product.reviews }})</small>
         </div>
+        <div class="installment">12 oyga {{ product.monthly_price_display }}</div>
         <div class="product-actions">
             <div class="price">
                 <strong>{{ product.price_display }}</strong>
@@ -31,7 +33,12 @@
             <form method="post" action="{% url 'shop:add_to_cart' product.slug %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                <button class="icon-btn" type="submit" aria-label="{{ ui.add_to_cart }}" {% if not product.stock.is_available %}disabled{% endif %}>+</button>
+                <button class="icon-btn" type="submit" aria-label="{{ ui.add_to_cart }}" {% if not product.stock.is_available %}disabled{% endif %}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 4h2l2.2 10.3a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6"></path>
+                        <path d="M10 20h.01M18 20h.01"></path>
+                    </svg>
+                </button>
             </form>
         </div>
         <form class="compare-form" method="post" action="{% url 'shop:toggle_compare' product.slug %}">
