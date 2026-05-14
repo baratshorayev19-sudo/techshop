@@ -2058,54 +2058,70 @@ body {
 
 .problem-section {
     display: grid;
-    grid-template-columns: minmax(280px, .9fr) minmax(520px, 1.1fr);
-    gap: 24px;
+    grid-template-columns: minmax(260px, .72fr) minmax(560px, 1.28fr);
+    gap: 18px;
     align-items: start;
-    margin: 22px 0 36px;
-    padding: 28px;
-    border: 1px solid #e9eef5;
+    margin: 18px 0 34px;
+    padding: 22px;
+    border: 1px solid #e5ebf3;
     border-radius: 16px;
-    background: #f8fafc;
+    background: linear-gradient(180deg, #f8fafc, #ffffff);
 }
 
 .problem-intro h2 {
-    margin: 8px 0 12px;
-    font-size: clamp(28px, 3vw, 42px);
-    line-height: 1.08;
+    max-width: 430px;
+    margin: 8px 0 10px;
+    font-size: clamp(24px, 2.4vw, 34px);
+    line-height: 1.12;
 }
 
 .problem-intro p,
 .problem-grid p {
     margin: 0;
     color: #5f6b7a;
-    line-height: 1.55;
+    line-height: 1.45;
 }
 
 .problem-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+    gap: 10px;
 }
 
 .problem-grid article {
     display: grid;
-    gap: 8px;
-    min-height: 168px;
-    padding: 18px;
+    grid-template-columns: 40px 1fr;
+    gap: 6px 12px;
+    align-items: start;
+    min-height: 122px;
+    padding: 16px;
     border: 1px solid #e4eaf2;
     border-radius: 14px;
     background: #fff;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, .05);
 }
 
 .problem-grid b {
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     color: #0f8b8d;
+    background: #e6f7f7;
     font-size: 13px;
     font-weight: 900;
 }
 
 .problem-grid h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 17px;
+    line-height: 1.22;
+}
+
+.problem-grid p {
+    font-size: 14px;
 }
 
 .compact-section {
@@ -2790,6 +2806,7 @@ body {
 
     .problem-section {
         grid-template-columns: 1fr;
+        padding: 18px;
     }
 
     .problem-grid {
@@ -2930,16 +2947,16 @@ body {
 
     .problem-section {
         margin: 16px 0 28px;
-        padding: 18px 14px;
+        padding: 16px 12px;
     }
 
     .problem-intro h2 {
-        font-size: 26px;
+        font-size: 24px;
     }
 
     .problem-grid article {
         min-height: 0;
-        padding: 15px;
+        padding: 14px;
     }
 
     .hero-appliance-grid {
