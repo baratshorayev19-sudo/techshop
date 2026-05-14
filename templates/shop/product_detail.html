@@ -24,8 +24,11 @@
         <span class="badge">{{ product.badge }}</span>
         <h1>{{ product.name }}</h1>
         <p class="lead">{{ product.description }}</p>
-        <div class="rating"><span>&#9733;&#9733;&#9733;&#9733;&#9733;</span><b>{{ product.rating }}</b><small>{{ visible_review_count }} {{ ui.reviews }}</small></div>
-        <div class="stock-chip {{ product.stock.level }}">{{ product.stock.label }}</div>
+        <div class="detail-status-row">
+            <div class="rating"><span>&#9733;</span><b>{{ product.rating }}</b><small>{{ visible_review_count }} {{ ui.reviews }}</small></div>
+            <span class="status-separator"></span>
+            <div class="stock-chip {{ product.stock.level }}">{{ product.stock.label }}</div>
+        </div>
         <div class="detail-price"><strong>{{ product.price_display }}</strong><del>{{ product.old_price_display }}</del></div>
         <div class="detail-mini-actions">
             <form class="detail-favorite-form" method="post" action="{% url 'shop:toggle_favorite' product.slug %}" data-favorite-form>
