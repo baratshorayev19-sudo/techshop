@@ -25,18 +25,44 @@ def _favorite_slugs(request):
     return set(request.session.get("favorites", []))
 
 
+def _compare_slugs(request):
+    return request.session.get("compare", [])
+
+
+def _stock_status(product, language):
+    if product["id"] % 11 == 0:
+        quantity = 0
+    else:
+        quantity = (product["id"] * 7) % 16 + 1
+    if quantity == 0:
+        label = "Mavjud emas" if language == "uz" else "Out of stock"
+        level = "out"
+    elif quantity <= 5:
+        label = f"Kam qoldi: {quantity} dona" if language == "uz" else f"Low stock: {quantity} left"
+        level = "low"
+    else:
+        label = f"Mavjud: {quantity} dona" if language == "uz" else f"In stock: {quantity}"
+        level = "in"
+    return {"quantity": quantity, "label": label, "level": level, "is_available": quantity > 0}
+
+
+def _attach_product_state(localized, source, language, request):
+    localized["is_favorite"] = localized["slug"] in _favorite_slugs(request)
+    localized["is_compared"] = localized["slug"] in set(_compare_slugs(request))
+    localized["stock"] = _stock_status(source, language)
+    return localized
+
+
 def _with_favorite_flags(products, language, request):
-    favorites = _favorite_slugs(request)
     localized = localize_products(products, language)
-    for product in localized:
-        product["is_favorite"] = product["slug"] in favorites
+    for source, product in zip(products, localized):
+        _attach_product_state(product, source, language, request)
     return localized
 
 
 def _with_favorite_flag(product, language, request):
     localized = localize_product(product, language)
-    localized["is_favorite"] = localized["slug"] in _favorite_slugs(request)
-    return localized
+    return _attach_product_state(localized, product, language, request)
 
 
 def _cart_items(request):
@@ -170,6 +196,11 @@ def product_detail(request, slug):
             messages.success(request, "Sharhingiz qo'shildi." if language == "uz" else "Your review was added.")
             return redirect("shop:product_detail", slug=slug)
 
+    recently_viewed = [item for item in request.session.get("recently_viewed", []) if item != slug]
+    recently_viewed.insert(0, slug)
+    request.session["recently_viewed"] = recently_viewed[:8]
+    request.session.modified = True
+
     related = [item for item in PRODUCTS if item["category"] == product["category"] and item["slug"] != slug]
     if len(related) < 4:
         related_slugs = {item["slug"] for item in related}
@@ -179,6 +210,8 @@ def product_detail(request, slug):
             if item["slug"] != slug and item["slug"] not in related_slugs
         )
     related = related[:4]
+    recent_products = [get_product(item_slug) for item_slug in recently_viewed[1:5]]
+    recent_products = [item for item in recent_products if item]
     return render(
         request,
         "shop/product_detail.html",
@@ -188,6 +221,7 @@ def product_detail(request, slug):
             "review_form": review_form,
             "product_reviews": product_reviews,
             "visible_review_count": product["reviews"] + len(product_reviews),
+            "recently_viewed": _with_favorite_flags(recent_products, language, request),
         },
     )
 
@@ -204,6 +238,37 @@ def favorites(request):
     products = [product for product in PRODUCTS if product["slug"] in favorite_set]
     products.sort(key=lambda product: favorite_order.index(product["slug"]) if product["slug"] in favorite_order else 9999)
     return render(request, "shop/favorites.html", {"products": _with_favorite_flags(products, language, request)})
+
+
+def compare(request):
+    language = current_language(request)
+    compare_order = _compare_slugs(request)
+    products = [get_product(slug) for slug in compare_order]
+    products = [product for product in products if product]
+    return render(request, "shop/compare.html", {"products": _with_favorite_flags(products, language, request)})
+
+
+@require_POST
+def toggle_compare(request, slug):
+    language = current_language(request)
+    product = get_product(slug)
+    if not product:
+        messages.error(request, "Mahsulot topilmadi." if language == "uz" else "Product not found.")
+        return redirect("shop:products")
+
+    compare_list = _compare_slugs(request)
+    if slug in compare_list:
+        compare_list = [item for item in compare_list if item != slug]
+        message = "Mahsulot taqqoslashdan olib tashlandi." if language == "uz" else "Product removed from comparison."
+    else:
+        compare_list = [slug] + compare_list
+        compare_list = compare_list[:4]
+        message = "Mahsulot taqqoslashga qo'shildi." if language == "uz" else "Product added to comparison."
+    request.session["compare"] = compare_list
+    request.session.modified = True
+    messages.success(request, message)
+    next_url = request.POST.get("next") or request.META.get("HTTP_REFERER") or reverse("shop:compare")
+    return redirect(_safe_next_url(request, next_url))
 
 
 @require_POST
@@ -239,6 +304,10 @@ def add_to_cart(request, slug):
     if not product:
         messages.error(request, "Mahsulot topilmadi." if language == "uz" else "Product not found.")
         return redirect("shop:products")
+    if not _stock_status(product, language)["is_available"]:
+        messages.error(request, "Bu mahsulot hozir mavjud emas." if language == "uz" else "This product is out of stock.")
+        next_url = request.POST.get("next") or request.META.get("HTTP_REFERER") or reverse("shop:products")
+        return redirect(_safe_next_url(request, next_url))
     quantity = _parse_quantity(request.POST.get("quantity"))
     cart = request.session.get("cart", {})
     cart[slug] = cart.get(slug, 0) + quantity

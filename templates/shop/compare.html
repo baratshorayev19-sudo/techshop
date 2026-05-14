@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}{{ ui.compare_products }} | TechShop{% endblock %}
+{% block content %}
+<section class="page-hero compact">
+    <span class="eyebrow">{{ ui.compare }}</span>
+    <h1>{{ ui.compare_products }}</h1>
+</section>
+
+{% if products %}
+<section class="compare-table-wrap">
+    <table class="compare-table">
+        <thead>
+            <tr>
+                <th>{{ ui.products }}</th>
+                {% for product in products %}
+                    <th>
+                        <a href="{% url 'shop:product_detail' product.slug %}">
+                            <img src="{{ product.image }}?v=20260512-9" alt="{{ product.name }}">
+                            <span>{{ product.name }}</span>
+                        </a>
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ ui.category }}</td>
+                {% for product in products %}<td>{{ product.category_label }}</td>{% endfor %}
+            </tr>
+            <tr>
+                <td>{{ ui.price }}</td>
+                {% for product in products %}<td><strong>{{ product.price_display }}</strong></td>{% endfor %}
+            </tr>
+            <tr>
+                <td>{{ ui.rating }}</td>
+                {% for product in products %}<td>{{ product.rating }} / 5</td>{% endfor %}
+            </tr>
+            <tr>
+                <td>{{ ui.availability }}</td>
+                {% for product in products %}<td><span class="stock-chip {{ product.stock.level }}">{{ product.stock.label }}</span></td>{% endfor %}
+            </tr>
+            <tr>
+                <td>{{ ui.stock }}</td>
+                {% for product in products %}<td>{{ product.stock.quantity }}</td>{% endfor %}
+            </tr>
+            <tr>
+                <td>{{ ui.remove }}</td>
+                {% for product in products %}
+                    <td>
+                        <form method="post" action="{% url 'shop:toggle_compare' product.slug %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                            <button class="btn subtle" type="submit">{{ ui.remove }}</button>
+                        </form>
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</section>
+{% else %}
+<section class="section">
+    <div class="empty-state">{{ ui.comparison_empty }}</div>
+    <a class="btn primary" href="{% url 'shop:products' %}">{{ ui.shop_catalog }}</a>
+</section>
+{% endif %}
+{% endblock %}

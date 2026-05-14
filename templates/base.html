@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=20260514-1">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}?v=20260514-2">
 </head>
 <body>
     <header class="market-header">
@@ -100,6 +100,15 @@
                     </svg>
                     <span>{{ ui.favorites }}</span>
                     <b class="{% if not favorites_count %}hidden{% endif %}" data-favorites-count>{{ favorites_count }}</b>
+                </a>
+                <a class="market-action" href="{% url 'shop:compare' %}" aria-label="{{ ui.compare }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8 7h12"></path>
+                        <path d="m17 4 3 3-3 3"></path>
+                        <path d="M16 17H4"></path>
+                        <path d="m7 14-3 3 3 3"></path>
+                    </svg>
+                    <span>{{ ui.compare }}</span>
                 </a>
                 {% if auth_display %}
                     <div class="account-menu" data-account-menu>
@@ -245,6 +254,6 @@
             <a href="{% url 'shop:contact' %}">{{ ui.support }}</a>
         </div>
     </footer>
-    <script src="{% static 'js/main.js' %}?v=20260514-1"></script>
+    <script src="{% static 'js/main.js' %}?v=20260514-2"></script>
 </body>
 </html>

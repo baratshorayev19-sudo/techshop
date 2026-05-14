@@ -25,17 +25,27 @@
         <h1>{{ product.name }}</h1>
         <p class="lead">{{ product.description }}</p>
         <div class="rating"><span>&#9733;&#9733;&#9733;&#9733;&#9733;</span><b>{{ product.rating }}</b><small>{{ visible_review_count }} {{ ui.reviews }}</small></div>
+        <div class="stock-chip {{ product.stock.level }}">{{ product.stock.label }}</div>
         <div class="detail-price"><strong>{{ product.price_display }}</strong><del>{{ product.old_price_display }}</del></div>
-        <form class="detail-favorite-form" method="post" action="{% url 'shop:toggle_favorite' product.slug %}" data-favorite-form>
-            {% csrf_token %}
-            <input type="hidden" name="next" value="{{ request.get_full_path }}">
-            <button class="detail-favorite-btn {% if product.is_favorite %}active{% endif %}" type="submit" data-favorite-button>
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M20.8 5.6a5.4 5.4 0 0 0-7.6 0L12 6.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 22l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z"></path>
-                </svg>
-                <span>{{ ui.favorites }}</span>
-            </button>
-        </form>
+        <div class="detail-mini-actions">
+            <form class="detail-favorite-form" method="post" action="{% url 'shop:toggle_favorite' product.slug %}" data-favorite-form>
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="detail-favorite-btn {% if product.is_favorite %}active{% endif %}" type="submit" data-favorite-button>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20.8 5.6a5.4 5.4 0 0 0-7.6 0L12 6.8l-1.2-1.2a5.4 5.4 0 0 0-7.6 7.6L12 22l8.8-8.8a5.4 5.4 0 0 0 0-7.6Z"></path>
+                    </svg>
+                    <span>{{ ui.favorites }}</span>
+                </button>
+            </form>
+            <form class="detail-favorite-form" method="post" action="{% url 'shop:toggle_compare' product.slug %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button class="detail-favorite-btn {% if product.is_compared %}active compare-active{% endif %}" type="submit">
+                    <span>{% if product.is_compared %}{{ ui.remove_from_compare }}{% else %}{{ ui.add_to_compare }}{% endif %}</span>
+                </button>
+            </form>
+        </div>
         <ul class="spec-list">
             {% for spec in product.specs %}
                 <li>{{ spec }}</li>
@@ -50,7 +60,7 @@
                 <input id="quantity" type="number" name="quantity" value="1" min="1" max="10" readonly>
                 <button type="button" data-step="1" aria-label="Increase quantity">+</button>
             </div>
-            <button class="btn primary" type="submit">{{ ui.add_to_cart }}</button>
+            <button class="btn primary" type="submit" {% if not product.stock.is_available %}disabled{% endif %}>{{ ui.add_to_cart }}</button>
         </form>
     </div>
 </section>
@@ -94,6 +104,19 @@
     </div>
     <div class="product-grid">
         {% for product in related %}
+            {% include "shop/_product_card.html" %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if recently_viewed %}
+<section class="section">
+    <div class="section-heading">
+        <h2>{{ ui.recently_viewed }}</h2>
+    </div>
+    <div class="product-grid">
+        {% for product in recently_viewed %}
             {% include "shop/_product_card.html" %}
         {% endfor %}
     </div>

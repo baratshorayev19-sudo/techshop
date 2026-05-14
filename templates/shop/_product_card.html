@@ -16,6 +16,7 @@
         <div class="muted">{{ product.brand }} &middot; {{ product.category_label }}</div>
         <h3><a href="{% url 'shop:product_detail' product.slug %}">{{ product.name }}</a></h3>
         <p>{{ product.short }}</p>
+        <div class="stock-chip {{ product.stock.level }}">{{ product.stock.label }}</div>
         <div class="installment">12 oyga {{ product.monthly_price_display }} dan</div>
         <div class="rating" aria-label="{{ product.rating }} {{ ui.out_of_stars }}">
             <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
@@ -30,8 +31,15 @@
             <form method="post" action="{% url 'shop:add_to_cart' product.slug %}">
                 {% csrf_token %}
                 <input type="hidden" name="next" value="{{ request.get_full_path }}">
-                <button class="icon-btn" type="submit" aria-label="{{ ui.add_to_cart }}">+</button>
+                <button class="icon-btn" type="submit" aria-label="{{ ui.add_to_cart }}" {% if not product.stock.is_available %}disabled{% endif %}>+</button>
             </form>
         </div>
+        <form class="compare-form" method="post" action="{% url 'shop:toggle_compare' product.slug %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.get_full_path }}">
+            <button class="{% if product.is_compared %}active{% endif %}" type="submit">
+                {% if product.is_compared %}{{ ui.remove_from_compare }}{% else %}{{ ui.add_to_compare }}{% endif %}
+            </button>
+        </form>
     </div>
 </article>
