@@ -41,7 +41,10 @@ class CheckoutForm(forms.Form):
         allowed = set("0123456789+-()")
         if any(char not in allowed for char in phone):
             raise forms.ValidationError("Enter a valid phone number.")
-        return self.cleaned_data["phone"]
+        digits = [char for char in phone if char.isdigit()]
+        if len(digits) < 7:
+            raise forms.ValidationError("Enter a valid phone number.")
+        return phone
 
 
 class ReviewForm(forms.Form):

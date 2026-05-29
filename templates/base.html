@@ -4,8 +4,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="TechShop home appliances online store.">
+    <meta name="description" content="{% block meta_description %}TechShop — smartfonlar, maishiy texnika va kompyuterlar uchun zamonaviy onlayn do'kon.{% endblock %}">
     <title>{% block title %}TechShop{% endblock %}</title>
+    <meta name="theme-color" content="#155dfc">
+    <link rel="icon" type="image/svg+xml" href="{% static 'img/favicon.svg' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/favicon.svg' %}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="TechShop">
+    <meta property="og:title" content="{% block og_title %}TechShop{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Smartfonlar, maishiy texnika va kompyuterlar uchun zamonaviy onlayn do'kon.{% endblock %}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'img/favicon.svg' %}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.get_full_path }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TechShop">
+    <meta name="twitter:description" content="Smartfonlar, maishiy texnika va kompyuterlar uchun zamonaviy onlayn do'kon.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
