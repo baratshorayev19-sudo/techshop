@@ -293,3 +293,67 @@ if (galleryNext) {
         setGalleryImage(activeIndex + 1);
     });
 }
+
+/* =====================================================================
+   PREMIUM UPGRADE LAYER — header elevation + scroll reveal
+   ===================================================================== */
+(function () {
+    // Elevate the sticky header once the page is scrolled.
+    const header = document.querySelector(".market-header");
+    if (header) {
+        const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 8);
+        onScroll();
+        window.addEventListener("scroll", onScroll, { passive: true });
+    }
+
+    // Staggered reveal-on-scroll for key sections and cards.
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const selectors = [
+        ".market-hero",
+        ".quick-cat-card",
+        ".promo-row",
+        ".problem-intro",
+        ".problem-grid article",
+        ".section-heading",
+        ".product-card",
+        ".showcase-panel",
+        ".category-strip a",
+    ];
+    const targets = [];
+    selectors.forEach((selector) => {
+        document.querySelectorAll(selector).forEach((el) => targets.push(el));
+    });
+
+    if (reduceMotion || !("IntersectionObserver" in window) || !targets.length) {
+        document.documentElement.classList.remove("reveal-ready");
+        return;
+    }
+
+    targets.forEach((el, index) => {
+        el.setAttribute("data-reveal", "");
+        el.style.transitionDelay = `${Math.min(index % 8, 7) * 60}ms`;
+    });
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("in-view");
+                obs.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+
+    targets.forEach((el) => observer.observe(el));
+
+    // Safety net: if anything is still hidden after load, reveal it.
+    window.addEventListener("load", () => {
+        window.setTimeout(() => {
+            document.querySelectorAll("[data-reveal]:not(.in-view)").forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.classList.add("in-view");
+                }
+            });
+        }, 400);
+    });
+})();
